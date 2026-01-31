@@ -1,5 +1,9 @@
 # Kalman Filter Statistical Arbitrage Engine
 
+![Dashboard Preview](assets/dashboard.png)
+
+> *Interactive Research Dashboard built with Streamlit*
+
 ![Python](https://img.shields.io/badge/Python-3.10-blue.svg)
 
 ## Project Overview
@@ -219,7 +223,98 @@ The largest peak-to-trough decline in cumulative PnL.
 
 ---
 
+### Figure 4: Parameter Sensitivity Analysis - Robustness Check
+
+![Figure 4](assets/figure_4.png)
+
+**Analysis:**
+
+This **heatmap** shows the **Sharpe Ratio** achieved across different combinations of:
+- **Entry Threshold** (Y-axis): From 1.5σ to 3.0σ
+- **Exit Threshold** (X-axis): From -0.5σ to +0.5σ
+
+**Key Findings:**
+
+**Optimal Parameter Region:**
+- **Best Performance (Dark Green):** Entry threshold of **2.0σ** with exit threshold of **0.0σ** yields Sharpe Ratio of **0.61**
+- The optimal zone shows a clear concentration around moderate entry thresholds (1.85-2.0σ)
+
+**Sensitivity Insights:**
+- **Entry Threshold Impact:** 
+  - Too aggressive (1.5σ): Negative Sharpe (-0.14 to -0.34) due to overtrading and false signals
+  - Too conservative (≥2.67σ): Lower Sharpe (0.25) due to missed opportunities
+  - **Sweet spot:** 2.0-2.17σ range consistently produces Sharpe > 0.5
+
+- **Exit Threshold Impact:**
+  - Symmetric exits (±0.5σ) perform poorly (orange/red regions)
+  - **Mean reversion exits (0.0σ)** are optimal across most entry thresholds
+  - Negative exit thresholds (-0.5σ) cause premature exits, reducing profitability
+
+**Robustness Conclusion:**
+The strategy demonstrates **strong robustness** around the optimal parameters, with a wide plateau of positive Sharpe ratios in the 1.85-2.33σ entry range. This indicates the strategy is not over-fitted and performs well across reasonable parameter variations.
+
+**Practical Implication:**
+Traders can confidently use entry thresholds between 1.85-2.17σ with mean-reversion exits (0.0σ) without significant performance degradation, providing flexibility in implementation.
+
+---
+
+### Figure 5: Regime Adaptation - Dynamic Beta Tracking Price Shocks
+
+![Figure 5](assets/figure_5.png)
+
+**Analysis:**
+
+This visualization demonstrates the **adaptive power** of the Kalman Filter by overlaying:
+- **Gray Line:** Raw price of one asset (Y-axis left)
+- **Purple Line:** Kalman Filter's dynamic hedge ratio β (Y-axis right)
+
+**Regime Identification:**
+
+**Period 1 (2020-2021): COVID-19 Volatility**
+- Price experiences sharp decline followed by recovery
+- Beta remains **stable around 0.42-0.44**, showing the filter's noise rejection
+- The filter correctly identifies this as temporary volatility, not structural change
+
+**Period 2 (2021-2023): Stable Correlation**
+- Both price and beta exhibit **low volatility**
+- Beta oscillates gently around **0.43**, indicating consistent price relationship
+- This is the ideal regime for pairs trading
+
+**Period 3 (2024-2025): Structural Break**
+- **Critical observation:** Price surges dramatically (from ~50 to ~70)
+- Beta **rapidly adapts**, increasing from 0.43 to **0.55** (27% increase)
+- This demonstrates the filter's ability to **track regime shifts** in real-time
+
+**Period 4 (2025-2026): New Equilibrium**
+- Beta stabilizes at the **new higher level (~0.52-0.55)**
+- The filter has successfully **recalibrated** to the new price relationship
+- Static OLS would have failed here, using outdated β ≈ 0.43
+
+**Key Insight - Why Kalman Wins:**
+
+A **static OLS regression** estimated in 2020 would have locked β at ~0.43. When the structural break occurred in 2024-2025, this static hedge ratio would have caused:
+- **Incorrect position sizing** (underhedging by ~27%)
+- **Degraded signal quality** (spread no longer mean-reverting)
+- **Potential losses** from misaligned positions
+
+The Kalman Filter's **recursive updating** allows it to:
+1. **Detect** the regime change through increased innovation variance
+2. **Adapt** the hedge ratio smoothly via the Kalman Gain mechanism
+3. **Maintain** signal quality throughout the transition
+
+**Mathematical Explanation:**
+
+During the structural break, the innovation $e_t = Y_t - \beta_{t-1} X_t$ becomes large, which:
+- Increases the innovation covariance $S_t$
+- Increases the Kalman Gain $K_t = \frac{P_{t|t-1} H_t^T}{S_t}$
+- Allows larger updates: $\beta_t = \beta_{t-1} + K_t e_t$
+
+This is the **core advantage** of state-space models over static regression.
+
+---
+
 ## How to Run
+
 
 ### 1. Install Dependencies
 
