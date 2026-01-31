@@ -5,3 +5,5 @@ matplotlib
 seaborn
 pykalman
 curl_cffi
+streamlit
+plotly
