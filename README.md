@@ -1,7 +1,6 @@
 # Kalman Filter Statistical Arbitrage Engine
 
 ![Python](https://img.shields.io/badge/Python-3.10-blue.svg)
-![Status](https://img.shields.io/badge/Status-M.Tech_Project-green.svg)
 
 ## Project Overview
 
