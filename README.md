@@ -276,8 +276,4 @@ Open `notebooks/Analysis.ipynb` in Jupyter Lab for detailed exploratory analysis
 
 ---
 
-## License
 
-MIT License - See LICENSE file for details
-
----
