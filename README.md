@@ -1,10 +1,10 @@
 # Kalman Filter Statistical Arbitrage Engine
 
+![Python](https://img.shields.io/badge/Python-3.10-blue.svg)
+
 ![Dashboard Preview](assets/dashboard.png)
 
 > *Interactive Research Dashboard built with Streamlit*
-
-![Python](https://img.shields.io/badge/Python-3.10-blue.svg)
 
 ## Project Overview
 
