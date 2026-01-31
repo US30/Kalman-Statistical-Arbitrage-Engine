@@ -1,0 +1,7 @@
+numpy
+pandas
+statsmodels
+matplotlib
+seaborn
+pykalman
+curl_cffi
