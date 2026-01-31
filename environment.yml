@@ -10,9 +10,10 @@ dependencies:
   - matplotlib
   - seaborn
   - statsmodels
-  - yfinance
   - pip
   - pip:
     - pykalman
-    - backtrader
-    - jupyterlab
+    - curl_cffi
+    - streamlit
+    - plotly
+    - requests
