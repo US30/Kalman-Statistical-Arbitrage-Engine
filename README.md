@@ -2,6 +2,8 @@
 
 ![Python](https://img.shields.io/badge/Python-3.10-blue.svg)
 
+**[Live Demo](https://kalman-statistical-arbitrage-engine.streamlit.app/)** - Try the interactive dashboard now!
+
 ![Dashboard Preview](assets/dashboard.png)
 
 > *Interactive Research Dashboard built with Streamlit*
